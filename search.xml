@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>spring boot多数据源——AOP动态数据源</title>
+    <url>/2019/12/01/spring-boot%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E2%80%94%E2%80%94AOP%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE%E6%BA%90/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>spring boot多数据源——分包</title>
     <url>/2019/11/30/spring-boot%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E2%80%94%E2%80%94%E5%88%86%E5%8C%85/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>随着数据量的不断增多，单个数据库已经承受不了高并发带来的压力，此时使用多个数据库变得至关重要，传统项目整合多数据源有两种方案: AOP动态切换和分包配置数据源</p>
@@ -13,10 +18,13 @@
 <h4 id="编写副数据源配置文件"><a href="#编写副数据源配置文件" class="headerlink" title="编写副数据源配置文件"></a>编写副数据源配置文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Configuration</span></pre></td></tr><tr><td class="code"><pre><span class="line">@MapperScan(basePackages &#x3D; &#123;&quot;com.boyi.deputy.*.mapper&quot;&#125;,sqlSessionFactoryRef &#x3D; &quot;deputySqlSessionFactory&quot;)</span></pre></td></tr><tr><td class="code"><pre><span class="line">public class DeputyDataSourceConfig &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#x2F;**</span></pre></td></tr><tr><td class="code"><pre><span class="line">     * 创建副数据源</span></pre></td></tr><tr><td class="code"><pre><span class="line">     * @return</span></pre></td></tr><tr><td class="code"><pre><span class="line">     *&#x2F;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    @Bean</span></pre></td></tr><tr><td class="code"><pre><span class="line">    @ConfigurationProperties(prefix &#x3D; &quot;spring.datasource.deputy&quot;)</span></pre></td></tr><tr><td class="code"><pre><span class="line">    public DataSource deputyDataSource() &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        return DataSourceBuilder.create().build();</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">    @Bean</span></pre></td></tr><tr><td class="code"><pre><span class="line">    public SqlSessionFactory deputySqlSessionFactory() throws Exception &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        SqlSessionFactoryBean sqlSessionFactoryBean &#x3D; new SqlSessionFactoryBean();</span></pre></td></tr><tr><td class="code"><pre><span class="line">        sqlSessionFactoryBean.setDataSource(deputyDataSource());</span></pre></td></tr><tr><td class="code"><pre><span class="line">        return sqlSessionFactoryBean.getObject();</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#x2F;**</span></pre></td></tr><tr><td class="code"><pre><span class="line">     * 配置事务</span></pre></td></tr><tr><td class="code"><pre><span class="line">     *&#x2F;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    @Bean</span></pre></td></tr><tr><td class="code"><pre><span class="line">    @Primary</span></pre></td></tr><tr><td class="code"><pre><span class="line">    public DataSourceTransactionManager deputyTransactionManager() &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        return new DataSourceTransactionManager(deputyDataSource());</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">    @Bean</span></pre></td></tr><tr><td class="code"><pre><span class="line">    @Primary</span></pre></td></tr><tr><td class="code"><pre><span class="line">    public SqlSessionTemplate deputySqlSessionTemplate() throws Exception &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        return new SqlSessionTemplate(deputySqlSessionFactory());</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
 <h4 id="然后只要将不同数据库的操作分别放在对应的包下-basePackages-即可"><a href="#然后只要将不同数据库的操作分别放在对应的包下-basePackages-即可" class="headerlink" title="然后只要将不同数据库的操作分别放在对应的包下(basePackages)即可"></a>然后只要将不同数据库的操作分别放在对应的包下(basePackages)即可</h4><p>项目结构如下<br><img src="/2019/11/30/spring-boot%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E2%80%94%E2%80%94%E5%88%86%E5%8C%85/20191130221729.png" alt></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
 <li>配置文件中必须使用jdbc-url代替原来的url，否则会报jdbcUrl is required with driverClassName异常</li>
 <li>若想ConfigurationProperties注解生效，必须导入spring-boot-configuration-processor包，否则不生效</li>
+<li>事务的使用必须要指明是哪个数据源的事务管理器，否则事务失效，如@Transactional(value = “masterTransactionManager”)</li>
+<li>如果一个方法涉及多个数据源操作，此时无法做到同时回滚，尽量避免这种操作，这里涉及分布式事务</li>
 </ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>由上可见，分包方式实现多数据源有较大的局限性，尤其是事务的管理，下节将提供一种更推荐的方式来配置多数据源——AOP动态数据源</p>
 ]]></content>
       <tags>
         <tag>mybatis</tag>
