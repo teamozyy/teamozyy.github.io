@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue-cli3 脚手架搭建</title>
+    <url>/2019/12/05/vue-cli3-%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2><h4 id="vue-cli3-脚手架需要nodejs-8-9"><a href="#vue-cli3-脚手架需要nodejs-8-9" class="headerlink" title="vue-cli3 脚手架需要nodejs(8.9+)"></a>vue-cli3 脚手架需要nodejs(8.9+)</h4><p>下载地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;</span></pre></td></tr></table></figure>
+<p><img src="/2019/12/05/vue-cli3-%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/nodePage.png" alt></p>
+<h4 id="打开cmd安装vue-cli3-两种安装方式"><a href="#打开cmd安装vue-cli3-两种安装方式" class="headerlink" title="打开cmd安装vue-cli3(两种安装方式)"></a>打开cmd安装vue-cli3(两种安装方式)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g @vue&#x2F;cli</span></pre></td></tr><tr><td class="code"><pre><span class="line">或</span></pre></td></tr><tr><td class="code"><pre><span class="line">yarn global add @vue&#x2F;cli</span></pre></td></tr></table></figure>
+<p><img src="/2019/12/05/vue-cli3-%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/vuecliInstall.png" alt></p>
+<h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue create hello-world &#x2F;&#x2F; 项目名称</span></pre></td></tr></table></figure>
+
+<h4 id="选择创建方式"><a href="#选择创建方式" class="headerlink" title="选择创建方式"></a>选择创建方式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default (bable，eslint） &#x2F;&#x2F; 默认</span></pre></td></tr><tr><td class="code"><pre><span class="line">Manually select features &#x2F;&#x2F; 手动选择功能</span></pre></td></tr></table></figure>
+<p><img src="/2019/12/05/vue-cli3-%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/chooseMode.png" alt></p>
+<p>我们这里选择默认</p>
+<p><img src="/2019/12/05/vue-cli3-%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/create.png" alt></p>
+<h4 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm run serve</span></pre></td></tr></table></figure>
+
+<h4 id="访问主页"><a href="#访问主页" class="headerlink" title="访问主页"></a>访问主页</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost:8080</span></pre></td></tr></table></figure>
+<p><img src="/2019/12/05/vue-cli3-%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/vueHome.png" alt></p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring boot多数据源——AOP动态数据源</title>
     <url>/2019/12/01/spring-boot%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E2%80%94%E2%80%94AOP%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE%E6%BA%90/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>上一节介绍了分包方式实现的多数据源配置方式，相比分包，AOP配置多数据源更加灵活，而且也不会有多数据源带来的事务问题</p>
